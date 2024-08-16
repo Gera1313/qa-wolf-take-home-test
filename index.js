@@ -12,6 +12,7 @@ async function sortHackerNewsArticles() {
 }
 
 // plan for articles to load
+await page.waitForSelector('.athing');
 
 // Select the first 100 articles
 
