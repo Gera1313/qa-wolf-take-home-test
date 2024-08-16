@@ -11,6 +11,14 @@ async function sortHackerNewsArticles() {
   await page.goto("https://news.ycombinator.com/newest");
 }
 
+// plan for articles to load
+
+// Select the first 100 articles
+
+// Extract timestamps for the first 100 articles
+
+// Make sure articles are sorted from newest to oldest
+
 (async () => {
   await sortHackerNewsArticles();
 })();
