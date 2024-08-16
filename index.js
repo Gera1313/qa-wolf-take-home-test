@@ -15,6 +15,8 @@ async function sortHackerNewsArticles() {
 await page.waitForSelector('.athing');
 
 // Select the first 100 articles
+const articles = await page.$$('.athing');
+const first100Articles = articles.slice(0,100);
 
 // Extract timestamps for the first 100 articles
 
