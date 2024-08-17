@@ -27,6 +27,15 @@ for (let article of first100Articles) {
 }
 
 // Make sure articles are sorted from newest to oldest
+let isSorted = true; 
+for (let i = 0; i < articleData.length - 1; i++) {
+  if (articleData[i].timestamp < articleData[i + 1].timestamp) {
+    isSorted = false;
+    break;
+  }
+}
+
+
 
 (async () => {
   await sortHackerNewsArticles();
