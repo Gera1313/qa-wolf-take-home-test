@@ -17,7 +17,7 @@ async function sortHackerNewsArticles() {
   const articles = await page.$$('.athing');
   const first100Articles = articles.slice(0, 100);
 
-  // Extracts timestamps for the first 100 articles
+  // Extract timestamps for the first 100 articles
   let articleData = [];
   for (let article of first100Articles) {
     try {
@@ -40,9 +40,6 @@ async function sortHackerNewsArticles() {
 
   // Print the results
   console.log(isSorted ? 'Articles are sorted correctly' : 'Articles are NOT sorted correctly');
-
-  // pause the script
-  await page.pause();
 }
 
 (async () => {
