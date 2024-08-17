@@ -19,6 +19,12 @@ const articles = await page.$$('.athing');
 const first100Articles = articles.slice(0,100);
 
 // Extract timestamps for the first 100 articles
+let articleData = [];
+for (let article of first100Articles) {
+  const title = await article.$eval('.titlelink', el => el.innerText);
+  const timestamp = await article.$eval('.age', el => el.title); 
+  articleData.push({ title, timestamp: new Date(timestamp) });
+}
 
 // Make sure articles are sorted from newest to oldest
 
