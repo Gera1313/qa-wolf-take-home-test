@@ -9,7 +9,7 @@ async function sortHackerNewsArticles() {
 
   // go to Hacker News
   await page.goto("https://news.ycombinator.com/newest");
-}
+
 
 // plan for articles to load
 await page.waitForSelector('.athing');
@@ -35,9 +35,13 @@ for (let i = 0; i < articleData.length - 1; i++) {
   }
 }
 
+// prints the results
 console.log(isSorted ? 'Articles are sorted correctly' : 'Articles are NOT sorted correctly');
 
-await browser.close();
+// close the browser
+// await browser.close();
+await page.waitForTimeout(30000);
+}
 
 (async () => {
   await sortHackerNewsArticles();
