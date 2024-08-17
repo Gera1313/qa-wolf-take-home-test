@@ -10,37 +10,39 @@ async function sortHackerNewsArticles() {
   // go to Hacker News
   await page.goto("https://news.ycombinator.com/newest");
 
+  // wait for articles to load
+  await page.waitForSelector('.athing');
 
-// plan for articles to load
-await page.waitForSelector('.athing');
+  // Select the first 100 articles
+  const articles = await page.$$('.athing');
+  const first100Articles = articles.slice(0, 100);
 
-// Select the first 100 articles
-const articles = await page.$$('.athing');
-const first100Articles = articles.slice(0,100);
-
-// Extract timestamps for the first 100 articles
-let articleData = [];
-for (let article of first100Articles) {
-  const title = await article.$eval('.titlelink', el => el.innerText);
-  const timestamp = await article.$eval('.age', el => el.title); 
-  articleData.push({ title, timestamp: new Date(timestamp) });
-}
-
-// Make sure articles are sorted from newest to oldest
-let isSorted = true; 
-for (let i = 0; i < articleData.length - 1; i++) {
-  if (articleData[i].timestamp < articleData[i + 1].timestamp) {
-    isSorted = false;
-    break;
+  // Extracts timestamps for the first 100 articles
+  let articleData = [];
+  for (let article of first100Articles) {
+    try {
+      const title = await article.$eval('.titleline > a', el => el.innerText);
+      const timestamp = await article.$eval('.age', el => el.title);
+      articleData.push({ title, timestamp: new Date(timestamp) });
+    } catch (err) {
+      console.error('Error getting article data:', err);
+    }
   }
-}
 
-// prints the results
-console.log(isSorted ? 'Articles are sorted correctly' : 'Articles are NOT sorted correctly');
+  // Makes sure articles are sorted from newest to oldest
+  let isSorted = true;
+  for (let i = 0; i < articleData.length - 1; i++) {
+    if (articleData[i].timestamp < articleData[i + 1].timestamp) {
+      isSorted = false;
+      break;
+    }
+  }
 
-// close the browser
-// await browser.close();
-await page.waitForTimeout(30000);
+  // Print the results
+  console.log(isSorted ? 'Articles are sorted correctly' : 'Articles are NOT sorted correctly');
+
+  // pause the script
+  await page.pause();
 }
 
 (async () => {
