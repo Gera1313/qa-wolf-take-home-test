@@ -35,7 +35,9 @@ for (let i = 0; i < articleData.length - 1; i++) {
   }
 }
 
+console.log(isSorted ? 'Articles are sorted correctly' : 'Articles are NOT sorted correctly');
 
+await browser.close();
 
 (async () => {
   await sortHackerNewsArticles();
