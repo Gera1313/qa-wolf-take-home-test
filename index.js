@@ -27,7 +27,7 @@ async function sortHackerNewsArticles() {
     } catch (err) {
       console.error('Error getting article data:', err);
     }
-  }
+  } 
 
   // Makes sure articles are sorted from newest to oldest
   let isSorted = true;
