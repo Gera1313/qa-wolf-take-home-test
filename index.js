@@ -8,12 +8,15 @@ async function sortHackerNewsArticles() {
   const context = await browser.newContext();
   const page = await context.newPage();
 
-  // Go to Hacker News. I create a new browswer and page, and navigate to the "newest" page on Hacker News by using the 'page.goto()' method. 
+  // Go to Hacker News. 
+  // I create a new browswer and page, and navigate to the "newest" page on Hacker News by using the 'page.goto()' method. 
   await page.goto("https://news.ycombinator.com/newest");
 
-  // Wait for articles to load. I ensure that all articles are loaded before proceeding. I do this by waiting for the selector .athing, which is the class used for the article containers.
+  // Wait for articles to load. 
+  // I ensure that all articles are loaded before proceeding. I do this by waiting for the selector .athing, which is the class used for the article containers.
   await page.waitForSelector('.athing');
 
+  // Select the firt 100 articles. 
   // I then select all articles using $$('.athing') and slice the first 100 articles to work with.
   const articles = await page.$$('.athing');
   const first100Articles = articles.slice(0, 100);
@@ -33,6 +36,7 @@ async function sortHackerNewsArticles() {
   } 
 
   // Makes sure articles are sorted from newest to oldest
+  // I loop through the articleData array and compare each article’s timestamp with the next one. If any article is older than the next one, I flag that the articles are not sorted correctly.
   let isSorted = true;
   for (let i = 0; i < articleData.length - 1; i++) {
     if (articleData[i].timestamp < articleData[i + 1].timestamp) {
@@ -41,7 +45,8 @@ async function sortHackerNewsArticles() {
     }
   }
 
-  // Print the results
+  // Print the results. 
+  // I output the result to the console. It will either confirm that the articles are sorted correctly or indicate that they aren’t based on the value of 'isSorted'. 
   console.log(isSorted ? 'Articles are sorted correctly' : 'Articles are NOT sorted correctly');
 }
 
