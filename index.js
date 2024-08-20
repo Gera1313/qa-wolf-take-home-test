@@ -1,13 +1,14 @@
-// EDIT THIS FILE TO COMPLETE ASSIGNMENT QUESTION 1
+// I begin by importing the "chromium" module from Playwright. 
 const { chromium } = require("playwright");
 
+// The script runs within an asynchronous function called 'sortHackerNewsArticles'.
 async function sortHackerNewsArticles() {
   // launch browser
   const browser = await chromium.launch({ headless: false });
   const context = await browser.newContext();
   const page = await context.newPage();
 
-  // go to Hacker News
+  // Go to Hacker News. I create a new browswer and page, and navigate to the "newest" page on Hacker News by using the 'page.goto()' method. 
   await page.goto("https://news.ycombinator.com/newest");
 
   // wait for articles to load
