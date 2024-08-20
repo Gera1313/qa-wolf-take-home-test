@@ -11,14 +11,15 @@ async function sortHackerNewsArticles() {
   // Go to Hacker News. I create a new browswer and page, and navigate to the "newest" page on Hacker News by using the 'page.goto()' method. 
   await page.goto("https://news.ycombinator.com/newest");
 
-  // wait for articles to load
+  // Wait for articles to load. I ensure that all articles are loaded before proceeding. I do this by waiting for the selector .athing, which is the class used for the article containers.
   await page.waitForSelector('.athing');
 
-  // Select the first 100 articles
+  // I then select all articles using $$('.athing') and slice the first 100 articles to work with.
   const articles = await page.$$('.athing');
   const first100Articles = articles.slice(0, 100);
 
   // Extract timestamps for the first 100 articles
+  // I extract the title and timestamp of the articles. I use 'article.$eval()' to query and evaluate the elements inside each article. Timestamp is converted to a 'Date' object. 
   let articleData = [];
   for (let article of first100Articles) {
     try {
@@ -26,6 +27,7 @@ async function sortHackerNewsArticles() {
       const timestamp = await article.$eval('.age', el => el.title);
       articleData.push({ title, timestamp: new Date(timestamp) });
     } catch (err) {
+      // If there’s any issue during data extraction, such as a missing element, the error is caught and logged, ensuring the script doesn’t crash.
       console.error('Error getting article data:', err);
     }
   } 
